@@ -161,14 +161,14 @@ var _gradient:Gradient
 @export var point_color:Color = Color.WHITE :
 	set(_val):
 		point_color = _val
-		_update_all()
+		_color_changed()
 	get(): return point_color
 
 ## Color used for the outside edge of the gradient
 @export var edge_color:Color = Color(0,0,0,0.391) :
 	set(_val):
 		edge_color = _val
-		_update_all()
+		_color_changed()
 	get(): return edge_color
 
 ## Category for shape related variables
@@ -262,7 +262,7 @@ func _interpolation_change() -> void:
 				_gradient.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CUBIC
 
 
-## change gradient texture shape
+## Change gradient texture shape
 func _shape_change() -> void:
 	if texture:
 		match _shape:
@@ -278,6 +278,26 @@ func _shape_change() -> void:
 				texture.fill = GradientTexture2D.FILL_LINEAR
 				texture.fill_from = Vector2(0.0,0.0)
 				texture.fill_to = Vector2(2,0)
+
+
+## Change gradient colors
+func _color_changed() -> void:
+	if texture && _gradient && texture.gradient:
+		if fade_center && fade_edge < fade_center: fade_center = fade_edge - 0.02
+		elif fade_edge && fade_center > fade_edge: fade_edge = fade_center + 0.02
+
+		match invert_colors:
+			false:
+				_gradient.set_color(0, point_color)
+				_gradient.set_color(1, edge_color)
+			true:
+				_gradient.set_color(1, point_color)
+				_gradient.set_color(0, edge_color)
+
+		_gradient.set_color(2, Color(0,0,0,0))
+		_gradient.set_offset(0, fade_center)
+		_gradient.set_offset(1, fade_edge)
+		_gradient.set_offset(2, 0.7)
 
 
 ## Update all point light variables
@@ -308,23 +328,7 @@ func _update_all() -> void:
 	texture.gradient = _gradient
 	texture.gradient.resource_local_to_scene = false
 
-	if texture && _gradient && texture.gradient:
-		if fade_center && fade_edge < fade_center: fade_center = fade_edge - 0.02
-		elif fade_edge && fade_center > fade_edge: fade_edge = fade_center + 0.02
-
-		match invert_colors:
-			false:
-				_gradient.set_color(0, point_color)
-				_gradient.set_color(1, edge_color)
-			true:
-				_gradient.set_color(1, point_color)
-				_gradient.set_color(0, edge_color)
-
-		_gradient.set_color(2, Color(0,0,0,0))
-		_gradient.set_offset(0, fade_center)
-		_gradient.set_offset(1, fade_edge)
-		_gradient.set_offset(2, 0.7)
-
+	_color_changed()
 	_shape_change()
 	_interpolation_change()
 	shadow_enabled = enable_shadow
