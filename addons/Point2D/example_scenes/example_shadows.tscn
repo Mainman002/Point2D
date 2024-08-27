@@ -1,0 +1,196 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmrwepmdj1af3"]
+
+[ext_resource type="Script" path="res://addons/Point2D/scripts/Point2D.gd" id="1_e1gr5"]
+
+[sub_resource type="Gradient" id="Gradient_itguf"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.641, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.391, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ol7mh"]
+gradient = SubResource("Gradient_itguf")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_q0u4t"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.641, 0.7)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.391, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pukc2"]
+gradient = SubResource("Gradient_q0u4t")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_l33dx"]
+polygon = PackedVector2Array(0, 0, 108, 0, 108, 108, 0, 108)
+
+[sub_resource type="Animation" id="Animation_goprt"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_nv35i"]
+resource_name = "move_point2d"
+length = 5.0
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_trsgi"]
+_data = {
+"RESET": SubResource("Animation_goprt"),
+"move_point2d": SubResource("Animation_nv35i")
+}
+
+[node name="Example_Shadows" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -3081.0
+offset_top = -2321.0
+offset_right = 4447.0
+offset_bottom = 3100.0
+color = Color(0.151008, 0.186555, 0.204248, 1)
+metadata/_edit_lock_ = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.106074, 0.117421, 0.137973, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(583, 306)
+
+[node name="Point_Lights" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Point2D" type="PointLight2D" parent="Point_Lights"]
+position = Vector2(393, 303)
+energy = 1.854
+texture = SubResource("GradientTexture2D_ol7mh")
+texture_scale = 3.096
+script = ExtResource("1_e1gr5")
+light_brightness = 1.854
+light_distance = 3.096
+
+[node name="Point2D_Shadow" type="PointLight2D" parent="Point_Lights/Point2D"]
+energy = 1.854
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_pukc2")
+texture_scale = 3.918
+script = ExtResource("1_e1gr5")
+enable_shadow = true
+light_brightness = 1.854
+light_distance = 3.918
+
+[node name="Blocks" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Block_01" type="ColorRect" parent="Blocks"]
+offset_left = 157.0
+offset_top = 103.0
+offset_right = 265.0
+offset_bottom = 211.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_01"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_02" type="ColorRect" parent="Blocks"]
+offset_left = 245.0
+offset_top = 454.0
+offset_right = 353.0
+offset_bottom = 562.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_02"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_03" type="ColorRect" parent="Blocks"]
+offset_left = 524.0
+offset_top = 50.0
+offset_right = 632.0
+offset_bottom = 158.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_03"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_04" type="ColorRect" parent="Blocks"]
+offset_left = 809.0
+offset_top = 482.0
+offset_right = 917.0
+offset_bottom = 590.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_04"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_05" type="ColorRect" parent="Blocks"]
+offset_left = 905.0
+offset_top = 153.0
+offset_right = 1013.0
+offset_bottom = 261.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_05"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_06" type="ColorRect" parent="Blocks"]
+offset_left = 478.0
+offset_top = 341.0
+offset_right = 586.0
+offset_bottom = 449.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_06"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_07" type="ColorRect" parent="Blocks"]
+offset_left = 118.0
+offset_top = 286.0
+offset_right = 226.0
+offset_bottom = 394.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_07"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="Block_08" type="ColorRect" parent="Blocks"]
+offset_left = 341.0
+offset_top = 57.0
+offset_right = 449.0
+offset_bottom = 165.0
+color = Color(0.213973, 0.260863, 0.343694, 1)
+metadata/_edit_group_ = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Blocks/Block_08"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_l33dx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_trsgi")
+}
+autoplay = "move_point2d"
+speed_scale = 0.5
